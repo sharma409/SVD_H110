@@ -7,11 +7,12 @@ get_image_mat(image,1);
 
 %% 
 % Image compression and reconstruction using SVD.
-img = get_image_mat(image, 1);
+img = get_image_mat(image, 0);
 [U,S,V] = svd(img);
 
-sigma_max = min(diag(S))
-sigma_min = max(diag(S))
+sigma_max = max(diag(S));
+sigma_min = min(diag(S));
+condition = sigma_max/sigma_min; %same as cond(img)
 
 plot(diag(S));
 axis([-50 1000 -100 800]);
@@ -49,7 +50,7 @@ display('Image recontruction done!');
 %% Here we see the same thing happen in fast motion
 R = zeros(size(img));
 
-for i = 1:N
+for i = 1:min(size(img))
     %R = reconstruct(i,0,U,S,V);
     R = R + U(:,i)*S(i,i)*V(:,i)';
     i
@@ -67,7 +68,7 @@ for i = L:length(diag(S))
     pause(0.1);
 	display(sprintf('S(i,i) = %f',S(i,i)));
 end
-%% PCA
+%% Sort of PCA
 R = zeros(size(img));
 for i = 1:N
     R = R + U(:,i)*S(i,i)*V(:,i)';
@@ -78,3 +79,9 @@ for i = 1:N
 	display(sprintf('S(i,i) = %f',S(i,i)));
 end
 %% PCA
+principal_component = 100;
+PC = U(:,principal_component);
+compressed_mat = U(:,1:principal_component);
+Y = PC'*img;
+Z = compressed_mat'*img;
+imshow(Z);
