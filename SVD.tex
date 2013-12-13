@@ -1,8 +1,8 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath,amsthm,textcomp,amssymb,graphicx,float,mathrsfs,tabularx}
-\usepackage[margin=.8in]{geometry}
+\usepackage[margin=.9in]{geometry}
 \setlength\parindent{0pt}
-\author{Rishi Ssharma}
+\author{Rishi Sharma}
 \title{MATH H110- -- Fall 2013\\  Singular Value Decomposition (SVD)}
 
 \markboth{MATH H110 -- Fall 2013 SVD Lecture}{MATH H110 -- Fall 2013 SVD Lecture}
@@ -27,9 +27,9 @@ A major portion of SVD is that $A^\intercal A$ and $AA^\intercal$ will have the 
 
 Claim: $A^\intercal A$ and $AA^\intercal$ are symmetric (self-adjoint), {\bf positive semi-definite} matrices $\implies$
 \begin{enumerate}
-\item Both matrices are diagonalizable.
+\item Both matrices are diagonalizable
 \item All eigenvalues are real
-\item All eigenvalues are positive
+\item All eigenvalues are non-negative
 \end{enumerate}
 Note that a square matrix $S$ is positive semi-definite if $x^\intercal Sx \geq 0$.\\\\
 Proof: First two properties are easy: $(A^\intercal A)^\intercal = A^\intercal A^{\intercal^\intercal} = A^\intercal A$ and $(AA^\intercal)^\intercal = A^{\intercal^\intercal}A^\intercal = AA^\intercal$. Thus properties 1 and 2 follow from the Spectral Theorem of self-adjoint operators. Also, $x^\intercal A^\intercal Ax = \vert\vert Ax \vert\vert^2 \geq 0$ and $x^\intercal AA^\intercal x = \vert\vert Ax \vert\vert^2 \geq 0$, so $A^\intercal A$ and $AA^\intercal$ are positive semi-definite matrices. We will show that all eigenvalues of a positive semi-definite matrix are positive. Let $y$ be an eigenvector of a positive semi-definite matrix $S$ with eigenvalue $\lambda$
@@ -44,16 +44,16 @@ Proof:\\
 Let $x \in \mathbb{R}^m$ be an eigenvector of $A^\intercal A$ with eigenvalue $\lambda$. Then $AA^\intercal Ax = A\lambda x = \lambda Ax \implies Ax$ is an eigenvector of $AA^\intercal$ with eigenvalue $\lambda$.\\
 Let $x \in \mathbb{R}^n$ be an eigenvector of $AA^\intercal$ with an eigenvalue $\lambda$. Then $A^\intercal AA^\intercal x = A^\intercal \lambda x = \lambda A^\intercal x \implies A^\intercal x$ is an eigenvector of $A^\intercal A$ with eigenvalue $\lambda. \qed$\\
 
-These shared eigenvalues $\{\lambda_1,\dots,\lambda_r\}$ are referred to as the singular values of $A$. Note that we disclude 0 from this set of eigenvalues $\{\lambda_1,\dots,\lambda_r\}$, because as we noted above the null spaces of $A^\intercal A$ and $AA^\intercal$ are different if $n \neq m$. It is more common to write these values as $\{\sigma_1^2,\dots,\sigma_r^2\}$, which we know we can do because these values are positive. Now we will show that the eigenspaces that correspond to each eigenvalue have the same dimension. This is an interesting result because the eigenspaces $\{W_{\lambda_1},\dots,W_{\lambda_r}\} \in \mathbb{R}^m$ and $\{W'_{\lambda_1},\dots,W'_{\lambda_r}\} \in \mathbb{R}^n$ \\
+The square roots of these shared eigenvalues $\{\sqrt{\lambda_1},\dots,\sqrt{\lambda_r}\}$ are referred to as the singular values of $A$. Note that we disclude 0 from this set of eigenvalues $\{\lambda_1,\dots,\lambda_r\}$, because as we noted above the null spaces of $A^\intercal A$ and $AA^\intercal$ are different if $n \neq m$. It is more common to write these values as $\{\sigma_1^2,\dots,\sigma_r^2\}$, which we know we can do because these values are positive. Now we will show that the eigenspaces that correspond to each eigenvalue have the same dimension. This is an interesting result because the eigenspaces $\{W_{\lambda_1},\dots,W_{\lambda_r}\} \in \mathbb{R}^m$ and $\{W'_{\lambda_1},\dots,W'_{\lambda_r}\} \in \mathbb{R}^n$ \\
 
-Claim: $dim(W_{\lambda_i}) = dim(W'_{\lambda_i}) = n_i \forall \ i \in \{1,\dots,r\}$.\\
+Claim: $dim(W_{\lambda_i}) = dim(W'_{\lambda_i}) = n_i \ \forall \ i \in \{1,\dots,r\}$.\\
 Proof: Let $\{u_1,\dots,u_{n_i}\}$ be a basis for $W_{\lambda_i}$. We will show that $\{Au_1,\dots,Au_{n_i}\} \in W'_{\lambda_i}$ (we saw that in the previous proof) is a basis for $W'_{\lambda_i}$
 \begin{eqnarray*}
-\sum_{j=1}^{n_i} c_j Au_j = A\sum_{j=1}^{n_i} c_j u_j = 0 \implies \sum_{j=1}^{n_i} c_j u_j \in null(A) \cap W_{\lambda_i} = \{0\} \implies c_j = 0 \ \forall \ j\\
+\sum_{j=1}^{n_i} c_j Au_j = A\sum_{j=1}^{n_i} c_j u_j = 0 \implies \sum_{j=1}^{n_i} c_j u_j \in ker(A) \cap W_{\lambda_i} \equiv ker(A^\intercal A) \cap W_{\lambda_i} = \{0\} \implies c_j = 0 \ \forall \ j\\
 \end{eqnarray*}
 shows that $\{Au_1,\dots,Au_{n_i}\}$ are linearly independent. Now let some $w' \in W'_{\lambda_i}$ (remember that means that $AA^\intercal w' = \lambda_i w'$), then
 \begin{eqnarray*}
-A^\intercal w' \in W_{\lambda_i} \implies A^\intercal w' = \sum_{j=1}^{n_i} \alpha_ju_j \implies AA^\intercal w' = \sum_{j=1}^{n_i} \alpha_j Au_j = \lambda_i w' \implies w' = \frac{1}{\lambda_i}\sum_{j=1}^{n_i}\alpha_j Au_j
+A^\intercal w' \in W_{\lambda_i} \implies A^\intercal w' = \sum_{j=1}^{n_i} v_ju_j \implies AA^\intercal w' = \sum_{j=1}^{n_i} v_j Au_j = \lambda_i w' \implies w' = \frac{1}{\lambda_i}\sum_{j=1}^{n_i}v_j Au_j
 \end{eqnarray*}
 which shows that $\{Au_1,\dots,Au_{n_i}\}$ is a spanning set, and thus a basis of $W'_{\lambda_i} \qed$\\\\
 
@@ -70,31 +70,44 @@ Let's now take note of how the original matrix $A$ acts on vectors in these eige
 \newpage
 
 \underline{\bf SVD Theorem}:\\
-We construct an orthonormal basis for $W_{\lambda_i}$ of vectors $\alpha_1^i,\dots,\alpha_{n_i}^i$.\\
-We construct an orthonormal basis for $W'_{\lambda_i}$ of vectors $\beta_1^i,\dots,\beta_{n_i}^i$ by setting $\beta_j^i = \frac{A\alpha^i_j}{\sigma_i}$ where $\sigma_i = \sqrt{\lambda_i}$\\
+We construct an orthonormal basis for $W_{\lambda_i}$ of vectors $v_1^i,\dots,v_{n_i}^i$.\\
+We construct an orthonormal basis for $W'_{\lambda_i}$ of vectors $u_1^i,\dots,u_{n_i}^i$ by setting $u_j^i = \frac{Av^i_j}{\sigma_i}$ where $\sigma_i = \sqrt{\lambda_i}$\\
 Then we have
 \begin{equation*}
-A \left[ \alpha_1^i \cdots \alpha_{n_i}^i\right] = \left[ \beta_1^i \cdots \beta_{n_i}^i\right] \sigma_i
+A \left[ v_1^i \cdots v_{n_i}^i\right] = \left[ u_1^i \cdots u_{n_i}^i\right] \sigma_i
 \end{equation*}
 and if we chain together the orthonormal bases of all the eigenspaces (a direct sum decomposition $\mathbb{R}^k$), we get an orthornormal basis of the $\mathbb{R}^k$ where $k = \{m,n\}$. We must be careful with the subspaces $W_{\lambda_0}$ and $W'_{\lambda_0}$, which are the kernels of $A^\intercal A$ and $AA^\intercal$ respectively. We get the result
 
 \begin{eqnarray*}
-A \left[ \alpha_1^i \cdots \alpha_{n_i}^i \alpha_1^2 \cdots \alpha_{n_2}^2 \cdots \alpha_1^r \cdots \alpha_{n_r}^r  \alpha_1^0 \cdots \alpha_{n_0}^0 \right] = \left[\beta_1^i \cdots \beta_{n_i}^i \beta_1^2 \cdots \beta_{n_2}^2 \cdots \beta_1^r \cdots \beta_{n_r}^r  \beta_1^0 \cdots \beta_{n'_0}^0 \right]
+A \left[ v_1^1 \cdots v_{n_i}^1 v_1^2 \cdots v_{n_2}^2 \cdots v_1^r \cdots v_{n_r}^r  v_1^0 \cdots v_{n_0}^0 \right] = \left[u_1^1 \cdots u_{n_i}^1 u_1^2 \cdots u_{n_2}^2 \cdots u_1^r \cdots u_{n_r}^r  u_1^0 \cdots u_{n'_0}^0 \right]
             \begin{bmatrix}
             \sigma_1 & 0 & 0 & \cdots & 0 \\
             0 & \sigma_2 & 0 & \cdots & 0\\
             \vdots & \vdots & \vdots & \cdots & \vdots \\ 
             0 & 0 & 0 & \cdots & 0
             \end{bmatrix}\\
-\text{{\bf MATRIX D DOES NOT LOOK LIKE THAT I'M JUST TOO LAZY TO FORMAT IT}}
+\text{{\bf MATRIX $\Sigma$ DOES NOT LOOK LIKE THAT I'M JUST TOO LAZY TO FORMAT IT}}
 \end{eqnarray*}
-We can rewrite this in the form of the SVD, where $U = \left[\beta_1^i \cdots \beta_{n_i}^i \beta_1^2 \cdots \beta_{n_2}^2 \cdots \beta_1^r \cdots \beta_{n_r}^r  \beta_1^0 \cdots \beta_{n'_0}^0 \right]$ and $V = \left[ \alpha_1^i \cdots \alpha_{n_i}^i \alpha_1^2 \cdots \alpha_{n_2}^2 \cdots \alpha_1^r \cdots \alpha_{n_r}^r  \alpha_1^0 \cdots \alpha_{n_0}^0 \right]$, and $D$ is the diagonal matrix of singular values.
+We can rewrite this in the form of the SVD, where $U = \left[u_1^1 \cdots u_{n_i}^1 u_1^2 \cdots u_{n_2}^2 \cdots u_1^r \cdots u_{n_r}^r  u_1^0 \cdots u_{n'_0}^0 \right]$ and $V = \left[ v_1^i \cdots v_{n_i}^i v_1^2 \cdots v_{n_2}^2 \cdots v_1^r \cdots v_{n_r}^r  v_1^0 \cdots v_{n_0}^0 \right]$, and $\Sigma$ is the diagonal matrix of singular values.
 
 \begin{equation*}
-A = UDV^{-1} = UDV^\intercal
+A = U\Sigma V^{-1} = U\Sigma V^\intercal
 \end{equation*}
 
-where $U$ and $V^\intercal$ are both orthonormal matrices that are bases for eigenspaces of $AA^\intercal$ and $A^\intercal A$ respectively.
+where $U$ and $V^\intercal$ are both orthonormal matrices that are bases for eigenspaces of $AA^\intercal$ and $A^\intercal A$ respectively. \\
+
+We can also look at the Dyadic expansion of the SVD, which says
+
+\begin{equation*} A = UDV^\intercal = \sum_{i=1}^r \sigma_iu_iv_i^\intercal \end{equation*}
+which can be used to see that the matrix generated by any individual singular value is a rank-1 approximation of $A$ by the outer product.\\
+
+{\bf Polar Decomposition}\\
+The SVD leads immediately to the polar decomposition of a matrix into a rotation and a scaling such that
+\begin{equation*} A = \Theta R \end{equation*} where $\Theta$ is unitary and $R$ is a positive semi-definite Hermitian matrix. We define this from the SVD
+\begin{equation*} A = U\Sigma V^\intercal \end{equation*}
+by setting
+\begin{eqnarray*} \Theta &=& UV^\intercal \\ R &=& V \Sigma V^\intercal \end{eqnarray*}
+It can easily be verified that this satisfies the conditions on $\Theta$ and $R$. Intuitively, $A$ is decomposes into $R$, which stretches the space along a set of orthonormal axes, and a rotation $\Theta$.
 
 
 \end{document}

@@ -1,7 +1,8 @@
 clear;clc;
 img0 = 'campanille.jpg';
 img1 = 'mandrill.png';
-image = img0;
+img2 = 'internet.png';
+image = img2;
 %%
 get_image_mat(image,1);
 
